@@ -19,11 +19,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private LayoutInflater mLayoutInflator;
     private List<ItemModel> itemData = null;
     private Context mContext;
+    private ClickListener mClickListener;
 
     public RecyclerViewAdapter(Context context, List<ItemModel> itemData) {
         mLayoutInflator = LayoutInflater.from(context);
         mContext = context;
         this.itemData = itemData;
+    }
+
+    public void setClickListener(ClickListener clickListener) {
+        mClickListener = clickListener;
     }
 
     @Override
@@ -43,7 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         mRecyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"Item clicked at " +position,Toast.LENGTH_SHORT).show();
+                if (mClickListener != null) {
+                    mClickListener.itemClicked(v, position);
+                }
             }
         });
     }
@@ -61,7 +68,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             mLblTriggerName = (TextView) itemView.findViewById(R.id.tv_triggername);
             mLblTriggerAddress = (TextView) itemView.findViewById(R.id.tv_triggeraddress);
-
         }
     }
+
+    public interface ClickListener {
+        //override itemClicked
+        void itemClicked(View view, int position);
+    }
+
 }

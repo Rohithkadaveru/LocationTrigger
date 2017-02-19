@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -17,9 +18,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private LayoutInflater mLayoutInflator;
     private List<ItemModel> itemData = null;
+    private Context mContext;
 
     public RecyclerViewAdapter(Context context, List<ItemModel> itemData) {
         mLayoutInflator = LayoutInflater.from(context);
+        mContext = context;
         this.itemData = itemData;
     }
 
@@ -32,10 +35,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder mRecyclerViewHolder, int position) {
-        ItemModel currentitem = itemData.get(position);
-        mRecyclerViewHolder.mLblTriggerAddress.setText(currentitem.address);
-        mRecyclerViewHolder.mLblTriggerName.setText(currentitem.triggername);
+    public void onBindViewHolder(RecyclerViewHolder mRecyclerViewHolder, final int position) {
+        ItemModel currentItem = itemData.get(position);
+        mRecyclerViewHolder.mLblTriggerAddress.setText(currentItem.address);
+        mRecyclerViewHolder.mLblTriggerName.setText(currentItem.triggername);
+
+        mRecyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext,"Item clicked at " +position,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -51,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             mLblTriggerName = (TextView) itemView.findViewById(R.id.tv_triggername);
             mLblTriggerAddress = (TextView) itemView.findViewById(R.id.tv_triggeraddress);
+
         }
     }
 }

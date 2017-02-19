@@ -44,7 +44,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ItemModel currentItem = itemData.get(position);
         mRecyclerViewHolder.mLblTriggerAddress.setText(currentItem.address);
         mRecyclerViewHolder.mLblTriggerName.setText(currentItem.triggername);
-
         mRecyclerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
